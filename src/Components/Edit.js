@@ -189,7 +189,7 @@ const Edit = ({ item }) => {
       <div className="flex items-center justify-end ">
         <Button
           title={"Edit"}
-          className={`bg-lime-500 hover:bg-lime-400 text-white px-5 py-2  rounded-sm`}
+          className={`bg-lime-500 hover:bg-lime-400 text-white px-3 py-1 rounded text-[0.7rem] sm:text-[0.9rem]`}
           onClick={() => {
             setIsActive(true);
           }}

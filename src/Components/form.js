@@ -27,6 +27,7 @@ const Form = () => {
 
   const todo = () => {
     dispatch(createUser(userData));
+
     setUserData({
       name: "",
       email: "",
@@ -191,7 +192,10 @@ const Form = () => {
               <Button
                 title={"Submit"}
                 className={`pb-[.5rem] px-[7rem] py-3 bg-slate-500 text-white rounded-sm outline-none hover:bg-slate-400`}
-                onClick={() => todo()}
+                onClick={() => {
+                  setIsActive(false);
+                  todo();
+                }}
               />
             </div>
           </div>

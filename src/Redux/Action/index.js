@@ -1,13 +1,13 @@
 export const CREATE_USER = "CREATE_USER";
 export const DELETE_USER = "DELETE_USER";
 export const UPDATE_USER = "UPDATE_USER";
-export const JOB_TITLE = "JOB_TITLE";
-export const FILTER_CITY = "FILTER_CITY";
+export const FILTER_VALUE = "FILTER_VALUE";
 export const SHORTING_ID = "SHORTING_ID";
 export const SEARCHING_VALUE = "SEARCHING_VALUE";
+export const RESET_FILTER = "RESET_FILTER";
 
 export const createUser = (payload) => {
-  console.log("action payload==========>", payload);
+  // console.log("action payload==========>", payload);
 
   return {
     type: CREATE_USER,
@@ -16,7 +16,7 @@ export const createUser = (payload) => {
 };
 
 export const deleteUser = (payload) => {
-  console.log("delete payload =============>", payload);
+  // console.log("delete payload =============>", payload);
 
   return {
     type: DELETE_USER,
@@ -25,7 +25,7 @@ export const deleteUser = (payload) => {
 };
 
 export const updateUser = (id, payload) => {
-  console.log("id, payload=========>", id, payload);
+  // console.log("id, payload=========>", id, payload);
 
   return {
     type: UPDATE_USER,
@@ -34,17 +34,19 @@ export const updateUser = (id, payload) => {
   };
 };
 
-export const jobTitle = (payload) => {
+export const filterValue = (payload) => {
+  console.log("filterCity payload=========>", payload);
+
   return {
-    type: JOB_TITLE,
+    type: FILTER_VALUE,
     payload,
   };
 };
 
-export const filterCity = (payload) => {
+export const resetFilter = () => {
+  // console.log("resetFilter payload=============>", resetFilter);
   return {
-    type: FILTER_CITY,
-    payload,
+    type: RESET_FILTER,
   };
 };
 
@@ -56,6 +58,8 @@ export const shortingId = (payload) => {
 };
 
 export const searchValue = (payload) => {
+  // console.log("searchValue payload===========>", payload);
+
   return {
     type: SEARCHING_VALUE,
     payload,
