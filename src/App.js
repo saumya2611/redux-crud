@@ -4,6 +4,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import Table from "./Components/table";
 import "./App.css";
 import { persistor, store } from "./Redux/store";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <div className="App">
           <Form />
           <Table />
+          <ToastContainer />
         </div>
       </PersistGate>
     </Provider>

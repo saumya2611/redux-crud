@@ -2,7 +2,8 @@ export const CREATE_USER = "CREATE_USER";
 export const DELETE_USER = "DELETE_USER";
 export const UPDATE_USER = "UPDATE_USER";
 export const FILTER_VALUE = "FILTER_VALUE";
-export const SHORTING_ID = "SHORTING_ID";
+export const SHORTING = "SHORTING";
+export const STRING_SHORTING = "STRING_SHORTING";
 export const SEARCHING_VALUE = "SEARCHING_VALUE";
 export const RESET_FILTER = "RESET_FILTER";
 
@@ -50,9 +51,23 @@ export const resetFilter = () => {
   };
 };
 
-export const shortingId = (payload) => {
+export const shorting = (order, payload) => {
+  // console.log("id payload is orderName =======>", order, orderName, payload);
+  console.log("id payload is========>", payload);
+
   return {
-    type: SHORTING_ID,
+    type: SHORTING,
+    order,
+    payload,
+  };
+};
+
+export const stringShorting = (orderName, payload) => {
+  console.log("orederName payload==========>", orderName, payload);
+
+  return {
+    type: STRING_SHORTING,
+    orderName,
     payload,
   };
 };

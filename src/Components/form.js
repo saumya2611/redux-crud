@@ -3,7 +3,7 @@ import Button from "./Button";
 import Modal from "./Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { createUser } from "../Redux/Action";
-import Edit from "./Edit";
+import { toast } from "react-toastify";
 
 const Form = () => {
   const [isActive, setIsActive] = useState(false);
@@ -25,8 +25,48 @@ const Form = () => {
 
   const dispatch = useDispatch();
 
-  const todo = () => {
+  const fillData = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email regex
+    const phoneRegex = /^[0-9]{10}$/; // Matches exactly 10 digits
+
+    if (!userData.name.trim()) {
+      toast.warn("Name is required");
+      return;
+    }
+    if (!userData.email) {
+      toast.warn("Email is required");
+      return;
+    } else {
+      if (!emailRegex.test(userData.email)) {
+        toast.warn("Enter a valid email address.");
+        return;
+      }
+    }
+    if (!userData.phone) {
+      toast.warn("Phone number is required !");
+      return;
+    } else {
+      if (!phoneRegex.test(userData.phone)) {
+        toast.warn("Enter a valid 10-digit phone number.");
+        return;
+      }
+    }
+    if (!userData.job) {
+      toast.warn("Job field is required");
+      return;
+    } else if (!userData.city) {
+      toast.warn("Please select city !");
+      return;
+    } else if (!userData.country) {
+      toast.warn("Please select country !");
+      return;
+    } else if (!userData.date) {
+      toast.warn("Please select date !");
+      return;
+    }
+
     dispatch(createUser(userData));
+    setIsActive(false);
 
     setUserData({
       name: "",
@@ -193,8 +233,7 @@ const Form = () => {
                 title={"Submit"}
                 className={`pb-[.5rem] px-[7rem] py-3 bg-slate-500 text-white rounded-sm outline-none hover:bg-slate-400`}
                 onClick={() => {
-                  setIsActive(false);
-                  todo();
+                  fillData();
                 }}
               />
             </div>

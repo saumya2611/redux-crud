@@ -22,10 +22,6 @@ const Edit = ({ item }) => {
 
   const dispatch = useDispatch();
 
-  const todo = () => {};
-
-  // useEffect(() => {
-  //   console.log("userData============>", userData);
   // }, [userData]);
 
   return (

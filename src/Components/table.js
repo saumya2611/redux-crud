@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "./Button";
+import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
+
 import {
   deleteUser,
   filterValue,
   resetFilter,
   searchValue,
+  shorting,
+  stringShorting,
 } from "../Redux/Action";
 
 import Edit from "./Edit";
@@ -15,7 +19,9 @@ const Table = () => {
     return state.userReducer;
   });
 
-  console.log("currentState=============>", currentState);
+  const { order, orderName } = currentState;
+
+  // console.log("currentState=============>", currentState);
 
   const dispatch = useDispatch();
 
@@ -37,7 +43,7 @@ const Table = () => {
             className="border-slate-300 border lg:w-[300px] outline-none pb-[.5rem] px-1.5 py-2 rounded-sm mt-2"
             value={currentState.selectCity}
             onChange={(ev) => {
-              dispatch(filterValue(ev.target.value, currentState.selectJob));
+              dispatch(filterValue(ev.target.value));
             }}
           >
             <option
@@ -144,9 +150,41 @@ const Table = () => {
         <div className="hidden sm:flex flex-col w-full">
           {/* Flexbox layout for iPad Pro and Desktop */}
           <div className="flex bg-gray-100 border-b">
-            <div className="flex-1 px-2 py-1 text-[1rem] font-semibold">Id</div>
-            <div className="flex-1 px-2 py-1 text-[1rem] font-semibold">
+            <div className="flex gap-1 items-center flex-1 px-2 py-1 text-[1rem] font-semibold">
+              Id
+              <Button
+                onClick={() =>
+                  dispatch(shorting(order === "" ? "asc" : order, "id"))
+                }
+                title={
+                  order === "asc" ? (
+                    <ArrowDown size={15} />
+                  ) : order === "dsc" ? (
+                    <ArrowUp size={15} />
+                  ) : (
+                    <ArrowUpDown size={15} />
+                  )
+                }
+              />
+            </div>
+            <div className="flex gap-1 items-center flex-1 px-2 py-1 text-[1rem] font-semibold">
               Name
+              <Button
+                onClick={() =>
+                  dispatch(
+                    stringShorting(orderName === "" ? "asc" : orderName, "name")
+                  )
+                }
+                title={
+                  orderName === "asc" ? (
+                    <ArrowDown size={15} />
+                  ) : orderName === "dsc" ? (
+                    <ArrowUp size={15} />
+                  ) : (
+                    <ArrowUpDown size={15} />
+                  )
+                }
+              />
             </div>
             <div className="flex-1 px-2 py-1 text-[1rem] font-semibold">
               Email
@@ -174,9 +212,13 @@ const Table = () => {
             </div>
           </div>
           {currentState.filterData?.map((item) => (
-            <div key={item.id} className="flex border-b items-center">
-              <div className="flex-1 px-2 py-1 text-[0.9rem]">{item.id}</div>
-              <div className="flex-1 px-2 py-1 text-[0.9rem]">{item.name}</div>
+            <div key={item.id} className="flex border-b  items-center">
+              <div className="flex-1 px-2 py-1 text-[0.9rem]  text-left">
+                {item.id}
+              </div>
+              <div className="flex-1 px-2 py-1 text-[0.9rem] text-left">
+                {item.name}
+              </div>
               <div className="flex-1 px-2 py-1 text-[0.9rem]">{item.email}</div>
               <div className="flex-1 px-2 py-1 text-[0.9rem]">{item.phone}</div>
               <div className="flex-1 px-2 py-1 text-[0.9rem]">{item.job}</div>

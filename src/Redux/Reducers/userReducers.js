@@ -1,11 +1,13 @@
+import { toast } from "react-toastify";
 import {
   CREATE_USER,
   DELETE_USER,
   UPDATE_USER,
   FILTER_VALUE,
-  SHORTING_ID,
+  SHORTING,
   SEARCHING_VALUE,
   RESET_FILTER,
+  STRING_SHORTING,
 } from "../Action";
 
 const initialState = {
@@ -15,13 +17,17 @@ const initialState = {
   searchedValue: "",
   selectCity: "",
   selectJob: "",
+  order: "",
+  orderName: "",
 };
 
 export const userReducer = (state = initialState, action) => {
   console.log("action===========>", action);
 
-  const { type, payload } = action;
+  const { type, payload, order, orderName } = action;
   console.log("payload==========>", payload);
+  console.log("orderName payload==========>", orderName);
+  // console.log("order==========>", order);
 
   switch (type) {
     case CREATE_USER:
@@ -29,6 +35,7 @@ export const userReducer = (state = initialState, action) => {
         ...payload,
         id: state.idCnt,
       };
+      toast.success("successfull created !");
 
       return {
         ...state,
@@ -42,6 +49,8 @@ export const userReducer = (state = initialState, action) => {
         return item.id != payload;
       });
       // console.log("newUserList==============>", newUserList);
+      toast.success("successfull deleted !");
+
       return {
         ...state,
         userList: newUserList,
@@ -57,10 +66,12 @@ export const userReducer = (state = initialState, action) => {
       });
 
       // console.log("changeData-->", changeData);
+      toast.success("successfull updated !");
 
       return {
         ...state,
         userList: changeData,
+        filterData: changeData,
       };
 
     case SEARCHING_VALUE:
@@ -96,7 +107,53 @@ export const userReducer = (state = initialState, action) => {
         filterData: state.userList,
         selectCity: "",
       };
+
+    case SHORTING:
+      console.log("action::", action);
+      const shortData = state.filterData.sort((a, b) => {
+        // console.log("typeof payload==========>", typeof a[payload], a[payload]);
+
+        if (typeof a[payload] === "number") {
+          if (order === "asc") {
+            return a[payload] - b[payload];
+          } else {
+            return b[payload] - a[payload];
+          }
+        }
+        if (order === "asc") {
+          return a[payload] - b[payload];
+        } else {
+          return b[payload] - a[payload];
+        }
+      });
+
+      console.log("shortData=========>", shortData);
+      return {
+        ...state,
+        order: action.order === "asc" ? "dsc" : "asc",
+        filterData: shortData,
+      };
+
+    case STRING_SHORTING:
+      const shortName = state.filterData.sort((a, b) => {
+        console.log("a =========> b", a[payload], b[payload]);
+
+        if (orderName === "asc") {
+          return a[payload].localeCompare(b[payload]);
+        } else {
+          return b[payload].localeCompare(a[payload]);
+        }
+      });
+      console.log("shortName=============>", shortName);
+
+      return {
+        ...state,
+        orderName: orderName === "asc" ? "dsc" : "asc",
+        filterData: shortName,
+      };
+
     default:
       return state;
   }
 };
+// orderName: orderName === "asc" ? "dsc" : "asc",
